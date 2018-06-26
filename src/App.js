@@ -70,7 +70,7 @@ class App extends Component {
             <Route path="/Admin_Dash" component={AdminDashboard} />
             <Route path="/Admin_Event" component={Event_Detail}/>
             <Route path="/charts" component={Chart}/>
-            <Route path="/Admin_Event" component={Event_Detail}/>
+           
             <Route path="/createEvent" component={Form}/>
             <Route path="/skill" component={HomePage} />
             <Route path="/location" component={HomePage} />
