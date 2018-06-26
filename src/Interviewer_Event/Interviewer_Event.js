@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import './Interviewer_Event.css';
 import {Link} from 'react-router-dom';
+import Interviewer_Dashboard from "../Interviewer_Dashboard/Interviewer_Dashboard";
 class Interviewer_Event extends Component {
     constructor(props) {
-        super(props);
- this.update = this.update.bind(this);        
+        super(props); 
     }
     componentDidMount()
     {
-        
-        const {datas} = this.props.location.state;
-        console.log(datas);
+        console.log(this.props);
     }
 
         

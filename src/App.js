@@ -66,7 +66,7 @@ class App extends Component {
             <Route path="/signup_interview" component={InterviewerReg} />
             <Route path="/signup_admin" component={AdminReg} />
             <Route path="/interview_dash" component={Interviewer_Dashboard} />
-            <Route path="/EventDetail" component={Interviewer_Event} />
+            <Route path="/EventDetail:id" name="id" component={Interviewer_Event} />
             <Route path="/Admin_Dash" component={AdminDashboard} />
             <Route path="/Admin_Event" component={Event_Detail}/>
             <Route path="/charts" component={Chart}/>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Interviewer_Dashboard.css';
 import {Link} from 'react-router-dom';
 // import fire from '../Fire';
+import Interviewer_Event from "../Interviewer_Event/Interviewer_Event";
 class Interviewer_Dashboard extends Component {
     constructor() {
         super();
@@ -225,13 +226,7 @@ class Interviewer_Dashboard extends Component {
                                     <h4 id="ID_card_start_time">Start Time: <span id="ID_st">{data.startTime}</span></h4>
                                     <h4 id="ID_card_stop_time">End Time: <span id="ID_et">{data.endTime}</span></h4>
                                     <button id="ID_view_data" type="button" class="btn btn-lg btn-success"    >
-                                    <Link to= {{pathname:"/EventDetail" ,state:
-                                    {
-                                        datas:data
-                                    }
-                                }
-                            }
-                            >>Click</Link></button>
+                                    <Link to={`/EventDetail:${data.id}`}>Click</Link></button>
                                 </div>)
                             }) }
 
@@ -247,7 +242,7 @@ class Interviewer_Dashboard extends Component {
                                     <h4 id="ID_card_date">{data.eventDate}</h4>
                                     <h4 id="ID_card_start_time">Start Time: <span id="ID_st">{data.startTime}</span></h4>
                                     <h4 id="ID_card_stop_time">End Time: <span id="ID_et">{data.endTime}</span></h4>
-                                    <button id="ID_view_data"  type="button" class="btn btn-lg btn-success"><Link to="/eventDetail" >Click </Link></button>
+                                    <button id="ID_view_data"  type="button" class="btn btn-lg btn-success"><Link to="/eventDetail">click</Link></button>
                                 </div>)
                             }) }
 
