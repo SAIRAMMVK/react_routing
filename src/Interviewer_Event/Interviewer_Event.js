@@ -9,15 +9,15 @@ class Interviewer_Event extends Component {
 
             slots: [
                 {
-                    endTime: "",
-                    id: "",
+                    endTime: "10:00am",
+                    id: "1",
                     noOfInterviewsEnrolled: [
                         {
-                            noOfInterviewsTaken: "",
-                            userid: ""
+                            noOfInterviewsTaken: "10",
+                            userid: "2"
                         }
                     ],
-                    startTime: ""
+                    startTime: "6:00am"
                 }
 
             ]
@@ -27,8 +27,14 @@ class Interviewer_Event extends Component {
         this.update = this.update.bind(this);
     }
 
-    toogle() {
-
+    toogle(id) {
+        console.log(id)
+        var d  = this.state.slots[id].noOfInterviewsEnrolled[0].noOfInterviewsTaken;
+        console.log(d);
+              
+        //    this.setState({
+        //        noOfInterviewsEnrolled:
+        //    });
     }
     update() {
 
@@ -38,21 +44,36 @@ class Interviewer_Event extends Component {
 
 
         var data = this.props.location.state.slotData;
+        console.log(data)
         console.log(data[0].endTime);
-        console.log(data[0].noOfInterviewsEnrolled);
-
+      console.log(data[0].noOfInterviewsEnrolled[0].noOfInterviewsTaken)
+      console.log(this.state.slots[0].noOfInterviewsEnrolled[0].noOfInterviewsTaken)
 
         this.setState({
 
             slots: [
                 {
-                    endTime: data.endTime,
-                    startTime: data.startTime,
-                    id: data.id,
+                    endTime: data[0].endTime,
+                    startTime: data[0].startTime,
+                    id: data[0].id,
                     noOfInterviewsEnrolled: [
                         {
-                            noOfInterviewsTaken: data.noOfInterviewsEnrolled,
-                            userid: data.userid
+                            noOfInterviewsTaken: "9",
+                            userid: "1"
+                        }
+                    ],
+
+
+
+                },
+                {
+                    endTime: data[0].endTime,
+                    startTime: data[0].startTime,
+                    id: data[0].id,
+                    noOfInterviewsEnrolled: [
+                        {
+                            noOfInterviewsTaken: "10",
+                            userid: "1"
                         }
                     ],
 
@@ -68,21 +89,35 @@ class Interviewer_Event extends Component {
 
     render() {
         let my = this;
+        let count =0;
         return (
             <div id="IE_body">
 
                 <div class="container box1">
 
+             {/* fhfg {this.state.slots[0].noOfInterviewsEnrolled[0].noOfInterviewsTaken} */}
+                
+          
                     <div class="row">
-                        <div class="col-lg-3"><p id="IE_time1"><i class="fas fa-clock">&nbsp; &nbsp; </i> <span id="IE_time2">{this.state.slots[0].endTime}</span></p></div>
                         {my.state.slots.map(function (data) {
 
+                          
+
                             return (<div>
-                                <div class="col-lg-3"> <p id="IE_count">{}</p></div>
+                        <div class="col-lg-3"><p id="IE_time1"><i class="fas fa-clock">&nbsp; &nbsp; </i> <span id="IE_time2">{data.startTime} - {data.endTime}</span></p></div>
+                                
+                                <div class="col-lg-3"> <p id="IE_count">{
+                                    data.noOfInterviewsEnrolled.map(function(d)
+                                {
+                                    return ( 
+                                        <h1>{ d.noOfInterviewsTaken}</h1>
+                                    )
+                                })
+                                }</p></div>
                                 <div class="col-lg-3">
                                     <div id="IE_tog">
                                         <label class="switch">
-                                            <input type="checkbox" onClick={my.toogle} />
+                                            <input type="checkbox"  onClick={my.toogle.bind(this,count++)} />
                                             <span class="slider round" ></span>
                                         </label></div>
                                 </div>
@@ -92,22 +127,24 @@ class Interviewer_Event extends Component {
                                     </h4>
                                 </div>
                             </div>
+                            
                             );
 
                         })}
 
+ </div>
 
 
+           </div>
+                    
 
-                    </div>
-
-                </div>
-
+                
 
                 <button id="IE_upd" type="button" class="btn btn-lg btn-success" onClick={my.update}>
                     Update
                 </button>
-            </div>
+               
+ </div>
 
         );
     }
