@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './registration.css';
 import {Link} from 'react-router-dom';
 
+
 export default class InterviewerReg extends Component {
     
     
@@ -10,7 +11,8 @@ export default class InterviewerReg extends Component {
         super();
         this.state={
            fields:{},
-           errors:{}
+           errors:{},
+           check:false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,29 +38,33 @@ export default class InterviewerReg extends Component {
             fields
         });
     }
-
+    navigate(){
+        alert("helo");
+    }
     handleSubmit(event){
         
         event.preventDefault();
         
         if(this.handleValidation()){
             alert("You are Registered");
+            this.setState({
+                check:true
+            })
             // data insertion into firebase
-            fetch('https://perl-react-project.firebaseio.com/user.json', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                    "Email":this.state.fields.email,
-                    "Mobile":this.state.fields.mobile,
-                    "Name":this.state.fields.name,
-                    "Password":this.state.fields.password,
-                    "Locations":this.state.fields.locations
-            })
-            })
-
+            // fetch('https://perl-react-project.firebaseio.com/user.json', {
+            // method: 'POST',
+            // headers: {
+            //     'Accept': 'application/json',
+            //     'Content-Type': 'application/json',
+            // },
+            // body: JSON.stringify({
+            //         "Email":this.state.fields.email,
+            //         "Mobile":this.state.fields.mobile,
+            //         "Name":this.state.fields.name,
+            //         "Password":this.state.fields.password,
+            //         "Locations":this.state.fields.locations
+            // })
+            // })
         }
 
         else{
@@ -190,7 +196,7 @@ export default class InterviewerReg extends Component {
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-mobile-phone fa-lg" aria-hidden="true"></i></span>
                                     <input type="text" class="form-control" name="mobile"
-                                     onChange={this.handleChange} value={this.state.fields["password"]} id="mobile" placeholder="Enter your MobileNumber" />
+                                     onChange={this.handleChange} value={this.state.fields["mobile"]} id="mobile" placeholder="Enter your MobileNumber" />
                                    
                                 </div>
                                 <span id="intereg">{this.state.errors["mobile"]}</span>
@@ -200,19 +206,26 @@ export default class InterviewerReg extends Component {
                             <label for="location">Skills</label>
                             <div className="input-group">
                             <select name="locations" onChange={this.handleChange} multiple >
-                                    <option value="hyderabad">Hyderabad</option>
-                                    <option value="pune">Pune</option>
-                                    <option value="chennai">Chennai</option>
-                                    <option value="bangalore">Bangalore</option>
-                                    <option value="noida">Noida</option>
-                                </select>
+                                    <option value="angular">Angular</option>
+                                    <option value="react">React</option>
+                                    <option value="java">Java</option>
+                            </select>
                             </div>
                         </div>
                         <div className="form-group">
-                          <Link to="interview_dash">  <input type="submit" value="Register Me!"/></Link>
+                            <input type="submit" value="Save Changes"/>
                         </div>
                     </fieldset>
                 </form>
+                {this.state.fields.locations}
+                <button onClick={this.navigate} id="AD_save" disabled={!this.state.check}>
+                {/* <Link to="/interview_dash">Register Me!</Link> */}
+                
+                <Link to={{ pathname: '/interview_dash', state: { 
+                    skills:this.state.fields.locations
+                } }}>My route</Link>                
+                </button>
+                
                 <div ref="result"></div>
             </div>
         );

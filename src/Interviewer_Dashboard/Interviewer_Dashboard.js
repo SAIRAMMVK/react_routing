@@ -9,7 +9,9 @@ class Interviewer_Dashboard extends Component {
         this.state = {
             recentEventArray: [
                 {
+                    startTime:"9:00am",
                     endTime: "2.00pm",
+                    key:"",
                     eventDate: "06/20/2018",
                     eventName: "Angular walk-in",
                     id: "01",
@@ -34,14 +36,16 @@ class Interviewer_Dashboard extends Component {
             ],
             upcomingEventArray : [
                 {
+                    startTime:"10:00am",
                     endTime: "2.00pm",
+                    key:"",
                     eventDate: "06/20/2018",
                     eventName: "Angular walk-in",
                     id: "01",
                     isClosed: "false",
                     location: "hyderabad",
                     skill: "Angular",
-                    slots: [
+                    slots: [  
                         {
                             endTime: "10.00am",
                             id: "11",
@@ -58,13 +62,29 @@ class Interviewer_Dashboard extends Component {
                 }
             ]
         }
-        this.check = this.check.bind(this);
+        this.matchSkillName = this.matchSkillName.bind(this);
     }
     signOut() {
         // fire.auth().signOut();
         // console.log(this.state.recevent);
     }
+    matchSkillName(skills,name)
+    {
+        //alert(name + skills[0]);
+        var skillArr = name.toLowerCase().split(" ");
+        console.log(skills[0]==skillArr[0]);
+        for(var i=0;i<skills.length;i++)
+        {
+          if(skills[i]==skillArr[0])
+             return true;
+        }
+          return false;
+    }
     componentDidMount() {
+
+        //console.log(this.props);
+        var skills = this.props.location.state.skills;
+        console.log(skills)
         const self = this;
         var recevent = {};
         var upevent = {};
@@ -74,9 +94,9 @@ class Interviewer_Dashboard extends Component {
             .then(function (data) {
                 ///  console.log(data);
                 var keys = Object.keys(data);
+                // console.log(keys);
                 for (var i = 0; i < keys.length; i++) {
-                    var 
-                    k = keys[i];
+                    var  k = keys[i];
                     var date = data[k].eventDate;
                     var d1 = date.split('/');
                     var gm = d1[0];
@@ -90,28 +110,41 @@ class Interviewer_Dashboard extends Component {
                     var cy = d1[2];
                     //  console.log(cd);
 
-
-                    if ((Math.abs(cm - gm) == 0 && Math.abs(cd - gd) <= 7) || data[k].isClosed == true) {
+ 
+                    // if ((Math.abs(cm - gm) == 0 && ((cd -gd) <= 0)||((cd-gd) > -5))){
                         //recent events 
+                        if(self.matchSkillName(skills,data[k].eventName))
+                        {
+                        if(Math.abs(cm-gm)==0 &&  (gd-cd<-7  || gd-cd <=0))
+                        {
+
                         recevent[i1] = data[k];
                         i1++;
-
+                        console.log("recent");
                     }
-                    else {
+                    else 
+                    {
                         //upcoming events
                         upevent[i2] = data[k];
                         i2++;
+                        console.log("upcoming");
 
                     }
+                }
 
                 }
                 console.log(Object.keys(recevent).length);
+                console.log(Object.keys(upevent).length);
                 //console.log(recevent.size);
+                var  keyData = Object.keys(data);
+                console
+                
                 for (var x = 0; x < Object.keys(recevent).length; x++) {
                     const recEventObj = {
                         id: x,
-                    //startTime: upevent[x].startTime,
+                    startTime: recevent[x].startTime,
                     endTime: recevent[x].endTime,
+                    key:keyData[x],
                     eventDate: recevent[x].eventDate,
                     eventName: recevent[x].eventName,
                     isClosed: recevent[x].isClosed,
@@ -139,11 +172,15 @@ class Interviewer_Dashboard extends Component {
                     });
 
                 }
+                var  keyData = Object.keys(data);
+                console.log("key" + keyData[0]);
                 for (var x = 0; x < Object.keys(upevent).length; x++) {
+                   
                     const upEventObj = {
                         id: x,
-                   // startTime: upevent[x].startTime,    
+                   startTime: upevent[x].startTime,    
                     endTime:   upevent[x].endTime,
+                    key:keyData[x],
                     eventDate: upevent[x].eventDate,
                     eventName: upevent[x].eventName,
                     isClosed:  upevent[x].isClosed,
@@ -164,14 +201,15 @@ class Interviewer_Dashboard extends Component {
                         
                     }]
                     }
-                    const joined = self.state.recentEventArray.concat(upEventObj);
+                    const joined = self.state.upcomingEventArray.concat(upEventObj);
+                    console.log(joined);
 
                     self.setState({
-                        recentEventArray: (joined)
+                        upcomingEventArray: (joined)
                     });
 
                 }
-                console.log(self.state.recentEventArray);
+                //console.log(self.state.recentEventArray);
                 // this.check(recevent);
             }
             )
@@ -180,7 +218,7 @@ class Interviewer_Dashboard extends Component {
 
 
 
-        console.log(this.state.recentEventArray);
+        //console.log(this.state.recentEventArray);
     }
 
     check(recent) {
@@ -226,7 +264,12 @@ class Interviewer_Dashboard extends Component {
                                     <h4 id="ID_card_start_time">Start Time: <span id="ID_st">{data.startTime}</span></h4>
                                     <h4 id="ID_card_stop_time">End Time: <span id="ID_et">{data.endTime}</span></h4>
                                     <button id="ID_view_data" type="button" class="btn btn-lg btn-success"    >
-                                    <Link to={`/EventDetail:${data.id}`}>Click</Link></button>
+                                    {/* <Link to={`/EventDetail:${data.id}`}>Click</Link></button> */}
+                                    <Link to={{ pathname: '/EventDetail', state: { 
+                                        key:data.key,
+                                        slotData:data.slots
+                                 
+                } }}>My route</Link>  </button>
                                 </div>)
                             }) }
 
@@ -269,18 +312,6 @@ class Interviewer_Dashboard extends Component {
 
 
 
-                <div id ="ID_box_container">
-                    <h3 id="ID_rec">up event<div> {this.state.eventDate}</div></h3>
-                    <div class="row">
-                        <div id="ID_card_U" class="col-lg-4">
-                            <h3 id="ID_card_U_heading">Angular 4</h3>
-                            <h4 id="ID_card_U_date">25-01-1997</h4>
-                            <h4 id="ID_card_U_start_time">Start Time: <span id="ID_sst">10: 00 AM</span></h4>
-                            <h4 id="ID_card_U_stop_time">End Time: <span id="ID_eet">1: 00PM</span></h4>
-                            <button id="ID_view_U_data" type="button" class="btn btn-lg btn-warning"><Link to="/eventDetail">Click</Link></button>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>

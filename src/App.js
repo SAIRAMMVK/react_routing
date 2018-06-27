@@ -9,10 +9,11 @@ import Event_Detail from './Event_Detail/Event_Detail';
 import Interviewer_Event from './Interviewer_Event/Interviewer_Event';
 // import fire from './Fire';
 import HomePage from './HomePage/HomePage';
-import AdminReg from './admin/admin-registration';
+
 import InterviewerReg from './interviewer/registration';
 // import HomePage from './HomePage/HomePage';
 import Chart from './admin/analytics';
+import AdminReg from './AdminReg/AdminReg';
 import Header from './common/header';
 import Profile from './common/profile';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -64,9 +65,9 @@ class App extends Component {
       <div>
             <Route exact path="/" component={HomePage} />
             <Route path="/signup_interview" component={InterviewerReg} />
-            <Route path="/signup_admin" component={AdminReg} />
+            <Route path="/adminReg" component={AdminReg} />
             <Route path="/interview_dash" component={Interviewer_Dashboard} />
-            <Route path="/EventDetail:id" name="id" component={Interviewer_Event} />
+            <Route path="/EventDetail" name="id" component={Interviewer_Event} />
             <Route path="/Admin_Dash" component={AdminDashboard} />
             <Route path="/Admin_Event" component={Event_Detail}/>
             <Route path="/charts" component={Chart}/>
