@@ -233,9 +233,9 @@ class AdminDashboard extends Component {
                             <a  class="dropdown-toggle" type="button" data-toggle="dropdown"><i id="ID_settings" class="fas fa-cogs"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a id="ID_settings_name" href="#">Profile settings</a></li>
-                                <li><a id="ID_settings_name" href="#">Location Management</a></li>
-                                <li><a id="ID_settings_name" href="#">Skill Management</a></li>
+                            <li><Link to="/profile" id="ID_settings_name" >Profile settings</Link></li>
+                                <li><Link to="/location" id="ID_settings_name" >Location Management</Link></li>
+                                <li><Link to="/skill" id="ID_settings_name" >Skill Management</Link></li>
                                
                             </ul>
                         </div>

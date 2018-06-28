@@ -10,6 +10,8 @@ import Event_Detail from './Event_Detail/Event_Detail';
 import Interviewer_Event from './Interviewer_Event/Interviewer_Event';
 // import fire from './Fire';
 import HomePage from './HomePage/HomePage';
+import MainLocation from './admin/Location_Management/main_location';
+import MainSkill from './admin/Skill_Management/main_skill';
 
 import InterviewerReg from './interviewer/registration';
 // import HomePage from './HomePage/HomePage';
@@ -75,11 +77,12 @@ class App extends Component {
             <Route path="/charts" component={Chart}/>
            
             <Route path="/createEvent" component={Form}/>
-            <Route path="/skill" component={HomePage} />
-            <Route path="/location" component={HomePage} />
-            <Route path="/profile" component={HomePage} />
+            <Route path="/skill" component={MainSkill} />
+            <Route path="/location" component={MainLocation} />
+            <Route path="/profile" component={Profile} />
       </div>
         </Router>
+  
 
  
     );

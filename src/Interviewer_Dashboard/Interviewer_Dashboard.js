@@ -255,9 +255,8 @@ class Interviewer_Dashboard extends Component {
                             <a  class="dropdown-toggle" type="button" data-toggle="dropdown"><i id="ID_settings" class="fas fa-cogs"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a id="ID_settings_name" href="#">Profile settings</a></li>
-                                <li><a id="ID_settings_name" href="#">Location Management</a></li>
-                                <li><a id="ID_settings_name" href="#">Skill Management</a></li>
+                                <li><Link to="/profile" id="ID_settings_name" >Profile settings</Link></li>
+                        
                             </ul>
                         </div>
                         <button id="ID_logout"class="btn btn-danger" onClick={this.signOut}><Link to="/">Logout</Link></button>
