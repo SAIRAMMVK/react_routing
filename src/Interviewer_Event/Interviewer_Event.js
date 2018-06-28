@@ -6,7 +6,8 @@ class Interviewer_Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            Interested:"",
+         value :"",
             slots: [
                 {
                     endTime: "10:00am",
@@ -20,14 +21,32 @@ class Interviewer_Event extends Component {
                     startTime: "6:00am"
                 }
 
-            ]
+            ],
+            slotId:"",
+            getToogle:"false"
+            
         }
         this.toogle = this.toogle.bind(this);
 
         this.update = this.update.bind(this);
+        this.call = this.call.bind(this);
+    }
+    call(e)
+    {
+
+    this.setState(
+        {
+            value:e.target.value
+        }
+    )
     }
 
     toogle(id) {
+
+        this.setState({
+            slotId:id,
+            getToogle:true
+        });
 
         var self = this;
         
@@ -51,40 +70,44 @@ class Interviewer_Event extends Component {
         .then(function(data)
     {
 
-          //console.log(data)
+//           //console.log(data)
 
-        var index = -1;
-        var count = 0;
+//         var index = -1;
+//         var count = 0;
 
-        console.log(data.slots[id]);
+//         console.log(data.slots[id]);
         
-       var s = data.slots[id].noOfInterviewsEnrolled;
+//        var s = data.slots[id].noOfInterviewsEnrolled;
 
-       for(var i=0;i<s.length;i++)
-       {
-           if(s[i].id==uid)
-             index=i;
-       }
-    var d ;
+//        for(var i=0;i<s.length;i++)
+//        {
+//            if(s[i].id==uid)
+//              index=i;
+//        }
+//     var d ;
 
-    console.log(index);
-    if(index==-1)
-    {
-  data.slots[id].noOfInterviewsEnrolled.push({
-         id:uid,
-         username:username,
-         noOfInterviewsTaken:0
-    })
-}
-else{
-d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
+//     console.log(index);
+//     console.log("id " + uid)
+//     if(index==-1)
+//     {
+//   data.slots[id].noOfInterviewsEnrolled.push({
+//          id:uid,
+//          username:username,
+//          noOfInterviewsTaken:0
+//     })
+// }
+// else{
+// d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
 
-}
+// }
 
     
     
        
-    
+    data.Interested +=1;
+    self.setState({
+        Interested:data.Interested
+    });
     
       fetch("https://perl-react-project.firebaseio.com/event/"+key+".json", {
             method: 'PUT',
@@ -112,6 +135,64 @@ d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
     }
     update() {
 
+        var key = this.props.location.state.key;
+        var uid = this.props.location.state.userid;
+        var username = this.props.location.state.username;
+        var v = this.state.value;
+        
+        
+           if(this.state.getToogle==true)
+           {
+           fetch("https://perl-react-project.firebaseio.com/event/"+key+".json").then(res => res.json())
+           .then(data =>
+        {
+            
+            var slotid  = this.state.slotId;
+            
+        var index = -1;
+  
+
+      
+        
+       var s = data.slots[slotid].noOfInterviewsEnrolled;
+
+       for(var i=0;i<s.length;i++)
+       {
+           if(s[i].id==uid)
+             index=i;
+       }
+       console.log(index);
+     
+       
+      
+       if(index==-1)
+       {
+        data.slots[slotid].noOfInterviewsEnrolled.push({
+            id:uid,
+            username:username,
+            noOfInterviewsTaken:0
+       })
+       }
+       else{
+       data.slots[slotid].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=v;
+       }
+
+       
+      fetch("https://perl-react-project.firebaseio.com/event/"+key+".json", {
+        method: 'PUT',
+
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+      
+       
+        return res;
+    }).catch(err => err);
+
+        })
+           }
     }
     componentDidMount() {
    
@@ -120,9 +201,11 @@ d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
 
 
         var data = this.props.location.state.slotData;
+        var key = this.props.location.state.key;
+        console.log(key)
 
 
-            fetch("https://perl-react-project.firebaseio.com/event/-LG-qV3AWXOgl672h5Q2.json").then(res => res.json())
+            fetch("https://perl-react-project.firebaseio.com/event/"+ key+".json").then(res => res.json())
             .then(function(data)
         {
                     self.setState({
@@ -199,7 +282,7 @@ d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
                                   <div class="row">
                         <div class="col-lg-3"><p id="IE_time1"><i class="fas fa-clock">&nbsp; &nbsp; </i> <span id="IE_time2">{data.startTime} - {data.endTime}</span></p></div>
                                 
-                                <div class="col-lg-3"> <p id="IE_count">{data.noOfInterviewsEnrolled.length }</p></div>
+                                <div class="col-lg-3"> <p id="IE_count">{data.noOfInterviewsEnrolled.length}</p></div>
                                 <div class="col-lg-3">
                                     <div id="IE_tog">
                                         <label class="switch">
@@ -209,7 +292,7 @@ d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
                                 </div>
                                 <div class="col-lg-3">
                                     <h4 id="IE_tot"> <span >Total Interviews </span>
-                                        <input type="text" class="form-control" id="IE_total" />
+                                        <input type="text" class="form-control" id="IE_total" onChange={my.call} />
                                     </h4>
                                 </div>
                                 </div>

@@ -88,6 +88,8 @@ class Interviewer_Dashboard extends Component {
         var skills = this.props.location.state.skills;
         var userid = this.props.location.state.userid;
 
+        console.log("otha vaad a" + userid);
+
         this.setState({
             userid:userid
         })
@@ -164,7 +166,7 @@ class Interviewer_Dashboard extends Component {
                             noOfInterviewsEnrolled: [
                                 {
                                     noOfInterviewsTaken: recevent[x].noOfInterviewsEnrolled,
-                                    userid: recevent[x].userid
+                                    id: recevent[x].userid
                                 }
                             ],
                             startTime: recevent[x].startTime
@@ -180,7 +182,7 @@ class Interviewer_Dashboard extends Component {
 
                 }
                 var  keyData = Object.keys(data);
-                console.log("key" + keyData[0]);
+                console.log("key" + keyData);
                 for (var x = 0; x < Object.keys(upevent).length; x++) {
                    
                     const upEventObj = {
@@ -200,7 +202,7 @@ class Interviewer_Dashboard extends Component {
                             noOfInterviewsEnrolled: [
                                 {
                                     noOfInterviewsTaken: upevent[x].noOfInterviewsEnrolled,
-                                    userid: upevent[x].userid
+                                    id: upevent[x].userid
                                 }
                             ],
                             startTime: upevent[x].startTime
@@ -267,7 +269,7 @@ class Interviewer_Dashboard extends Component {
                             {self.state.recentEventArray.map(function (data) {
                               
                               return (  <div id="ID_card" class="col-lg-3">
-                                    <h3 id="ID_card_heading">{data.userid}</h3>
+                                    <h3 id="ID_card_heading">{data.eventName}</h3>
                                     <h4 id="ID_card_date">{data.eventDate}</h4>
                                     <h4 id="ID_card_start_time">Start Time: <span id="ID_st">{data.startTime}</span></h4>
                                     <h4 id="ID_card_stop_time">End Time: <span id="ID_et">{data.endTime}</span></h4>

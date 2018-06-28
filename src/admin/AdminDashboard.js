@@ -261,7 +261,7 @@ class AdminDashboard extends Component {
                                          key:data.key,
                                       //  key:"-LG-qV3AWXOgl672h5Q2",
                                         slotData:data.slots,
-                                        userid:self.state.userid,
+                                        userid:self.state.adminId,
                                         username:self.props.location.state.username
                                         
                                  
