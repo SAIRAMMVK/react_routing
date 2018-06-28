@@ -239,7 +239,7 @@ class AdminDashboard extends Component {
                                
                             </ul>
                         </div>
-                        <button id="ID_logout"class="btn btn-danger" onClick={this.signOut}><Link to="/">Logout</Link></button>
+                        {/* <button id="ID_logout"class="btn btn-danger" onClick={this.signOut}><Link to="/">Logout</Link></button> */}
 
                     </div>
 

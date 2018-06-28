@@ -78,6 +78,7 @@ export default class InterviewerReg extends Component {
                         "Password":self.state.fields.password,
                         "Locations":self.state.fields.locations,
                         "id": d,
+                        points:0,
                         "eventPoints":[{
                             eventName:"",
                             eventId:"",

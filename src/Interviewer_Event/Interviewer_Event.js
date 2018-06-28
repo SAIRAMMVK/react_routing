@@ -7,7 +7,7 @@ class Interviewer_Event extends Component {
         super(props);
         this.state = {
             Interested:"",
-         value :"",
+         value :0,
             slots: [
                 {
                     endTime: "10:00am",
@@ -33,10 +33,11 @@ class Interviewer_Event extends Component {
     }
     call(e)
     {
+        var d = parseInt(this.state.value) + parseInt(e.target.value);
 
     this.setState(
         {
-            value:e.target.value
+            value:d
         }
     )
     }
@@ -70,43 +71,45 @@ class Interviewer_Event extends Component {
         .then(function(data)
     {
 
-//           //console.log(data)
+          //console.log(data)
 
-//         var index = -1;
-//         var count = 0;
+        var index = -1;
+        var count = 0;
 
-//         console.log(data.slots[id]);
+        console.log(data.slots[id]);
         
-//        var s = data.slots[id].noOfInterviewsEnrolled;
+       var s = data.slots[id].noOfInterviewsEnrolled;
 
-//        for(var i=0;i<s.length;i++)
-//        {
-//            if(s[i].id==uid)
-//              index=i;
-//        }
-//     var d ;
+       for(var i=0;i<s.length;i++)
+       {
+           if(s[i].id==uid)
+             index=i;
+       }
+    var d ;
 
-//     console.log(index);
-//     console.log("id " + uid)
-//     if(index==-1)
-//     {
-//   data.slots[id].noOfInterviewsEnrolled.push({
-//          id:uid,
-//          username:username,
-//          noOfInterviewsTaken:0
-//     })
-// }
-// else{
-// d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
+    console.log(index);
+    console.log("id " + uid)
+    if(index==-1)
+    {
+  data.slots[id].noOfInterviewsEnrolled.push({
+         id:uid,
+         username:username,
+         noOfInterviewsTaken:0
+    })
+}
+else{
+d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
 
-// }
+}
 
     
     
        
     data.Interested +=1;
+    data.id=uid;
     self.setState({
         Interested:data.Interested
+        
     });
     
       fetch("https://perl-react-project.firebaseio.com/event/"+key+".json", {

@@ -21,6 +21,51 @@ class Event_Detail extends Component {
       }
       ]
     }
+    this.points = this.points.bind(this);
+  }
+  points(user)
+  {
+   
+     var key = this.props.location.state.key;
+      console.log(user);
+
+    fetch("https://perl-react-project.firebaseio.com/user.json").then(res =>res.json())
+    .then(function(data)
+    {
+    
+          var keys = Object.keys(data);
+          for(var i=0;i<keys.length;i++)
+          {
+            var k = keys[i];
+           
+            const someid = data[k].id;
+            
+           
+              if(someid==user)
+              {
+              data =  data[k].points + 10;
+
+              fetch("https://perl-react-project.firebaseio.com/user/"+ keys[i]+".json", {
+                method: 'PUT',
+        
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+              
+               
+                return res;
+            }).catch(err => err);
+    
+              }
+
+
+          }
+        
+        
+        
+    })
   }
 
     componentDidMount()
@@ -113,15 +158,30 @@ class Event_Detail extends Component {
           
           <div id="ED_update" class="tab-pane fade">
             <div class="container row" id="ED_updatepage">
-              <div class="col-lg-4">
-                <h4 id="ED_name">  Dhinesh  </h4>
+
+            {self.state.slots.map(function(data)
+            {
+               return (
+                 data.noOfInterviewsEnrolled.map(function(d)
+                {
+                   return (
+                       <div>
+
+                         <div class="col-lg-4">
+                <h4 id="ED_name">  {d.username}  </h4>
               </div>
               <div class="col-lg-4">
-                <h4 id="ED_updatepoints"><span>  52</span>  </h4>
+                <h4 id="ED_updatepoints"><span>  {d.noOfInterviewsTaken}</span>  </h4>
               </div>
               <div class="col-lg-4">
-                <button class="btn  btn-primary" id="ED_update">Approve</button>
+                <button class="btn  btn-primary" id="ED_update" onClick={self.points.bind(this,d.id)}>Approve</button>
                             </div>
+                         </div>
+                   )
+                })
+               )
+            })}
+              
               </div>
               <button id="ED_updatebutton" class="btn btn-lg btn-success">Close Event</button>
             </div>

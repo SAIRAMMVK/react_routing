@@ -42,13 +42,14 @@
 }
 #ED_inside_i
 {
-color:white;
+color:black;
 font-size: 25px;
 margin-top: 5px;
 }
 #ED_inside_span
 {
  font-size: 20px;
+ color:black;
  letter-spacing: 1px;
  margin-left: 5px;
  font-weight: bold;

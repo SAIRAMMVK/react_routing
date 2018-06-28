@@ -14,6 +14,7 @@ class Interviewer_Dashboard extends Component {
                     startTime:"9:00am",
                     endTime: "2.00pm",
                     key:"",
+                    points:0,
                     eventDate: "06/20/2018",
                     eventName: "Angular walk-in",
                     id: "01",
@@ -41,6 +42,7 @@ class Interviewer_Dashboard extends Component {
                     startTime:"10:00am",
                     endTime: "2.00pm",
                     key:"",
+                    points:0,
                     eventDate: "06/20/2018",
                     eventName: "Angular walk-in",
                     id: "01",
@@ -152,6 +154,7 @@ class Interviewer_Dashboard extends Component {
                     const recEventObj = {
                         id: x,
                     startTime: recevent[x].startTime,
+                    points:0,
                     endTime: recevent[x].endTime,
                     key:keyData[x],
                     eventDate: recevent[x].eventDate,
@@ -190,6 +193,7 @@ class Interviewer_Dashboard extends Component {
                    startTime: upevent[x].startTime,    
                     endTime:   upevent[x].endTime,
                     key:keyData[x],
+                    points:0,
                     eventDate: upevent[x].eventDate,
                     eventName: upevent[x].eventName,
                     isClosed:  upevent[x].isClosed,
@@ -320,12 +324,12 @@ class Interviewer_Dashboard extends Component {
                             <h2 id="ID_points_head"><i class="fas fa-certificate"></i> Points so far...</h2>
                             <div id="ID_tt_tm">
                                 <span id="ID_tt">Total</span>
-                                <span id="ID_tm">This Month</span>
+                               
                             </div>
 
                             <div id="ID_tt_tm_v">
-                                <span id="ID_tt_v">193</span>
-                                <span id="ID_tm_v">26</span>
+                            
+                                <span id="ID_tm_v">{this.state.points}</span>
                             </div>
                         </div>
                     </div>
