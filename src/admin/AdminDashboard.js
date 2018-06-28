@@ -12,6 +12,7 @@ class AdminDashboard extends Component {
                     eventDate: "06/20/2018",
                     eventName: "Angular walk-in",
                     id: "01",
+                    key:"",
                     adminId:"",
                     isClosed: "false",
                     location: "hyderabad",
@@ -20,11 +21,12 @@ class AdminDashboard extends Component {
                     slots: [
                         {
                             endTime: "10.00am",
-                            id: "11",
+                        
                             noOfInterviewsEnrolled: [
                                 {
                                     noOfInterviewsTaken: "15",
-                                    userid: "1"
+                                    id: "1",
+                                    username:"mani"
                                 }
                             ],
                             startTime: "9.00am"
@@ -39,6 +41,7 @@ class AdminDashboard extends Component {
                     eventDate: "06/20/2018",
                     eventName: "Angular walk-in",
                     id: "01",
+                    key:"",
                     adminId:"",
                     isClosed: "false",
                     location: "hyderabad",
@@ -47,11 +50,12 @@ class AdminDashboard extends Component {
                     slots: [  
                         {
                             endTime: "10.00am",
-                            id: "11",
+                            
                             noOfInterviewsEnrolled: [
                                 {
                                     noOfInterviewsTaken: "15",
-                                    userid: "1"
+                                    id: "1",
+                                    username:"kumar"
                                 }
                             ],
 
@@ -125,9 +129,12 @@ class AdminDashboard extends Component {
                 console.log(Object.keys(recevent).length);
                 console.log(Object.keys(upevent).length);
                 //console.log(recevent.size);
+                var  keyData = Object.keys(data);
+                
                 for (var x = 0; x < Object.keys(recevent).length; x++) {
                     const recEventObj = {
                         id: x,
+                    key:keyData[x],
                     startTime: recevent[x].startTime,
                     endTime: recevent[x].endTime,
                     eventDate: recevent[x].eventDate,
@@ -142,7 +149,7 @@ class AdminDashboard extends Component {
                             noOfInterviewsEnrolled: [
                                 {
                                     noOfInterviewsTaken: recevent[x].noOfInterviewsEnrolled,
-                                    userid: recevent[x].userid
+                                    id: recevent[x].id
                                 }
                             ],
                             startTime: recevent[x].startTime
@@ -157,9 +164,14 @@ class AdminDashboard extends Component {
                     });
 
                 }
+                var  keyData = Object.keys(data);
+
+                console.log(keyData)
+                
                 for (var x = 0; x < Object.keys(upevent).length; x++) {
                     const upEventObj = {
                         id: x,
+                    key:keyData[x],                        
                    startTime: upevent[x].startTime,    
                     endTime:   upevent[x].endTime,
                     eventDate: upevent[x].eventDate,
@@ -174,7 +186,7 @@ class AdminDashboard extends Component {
                             noOfInterviewsEnrolled: [
                                 {
                                     noOfInterviewsTaken: upevent[x].noOfInterviewsEnrolled,
-                                    userid: upevent[x].userid
+                                    id: upevent[x].id
                                 }
                             ],
                             startTime: upevent[x].startTime
@@ -204,6 +216,8 @@ class AdminDashboard extends Component {
 
     
     render() {
+
+        var self = this;
 
         return (
             <div>
@@ -243,7 +257,16 @@ class AdminDashboard extends Component {
                                     <h4 id="ID_card_start_time">Start Time: <span id="ID_st">{data.startTime}</span></h4>
                                     <h4 id="ID_card_stop_time">End Time: <span id="ID_et">{data.endTime}</span></h4>
                                     <button id="ID_view_data" type="button" class="btn btn-lg btn-success"    >
-                                    <Link to={`/EventDetail:${data.id}`}>Click</Link></button>
+                                    <Link to={{ pathname: '/Admin_Event', state: { 
+                                         key:data.key,
+                                      //  key:"-LG-qV3AWXOgl672h5Q2",
+                                        slotData:data.slots,
+                                        userid:self.state.userid,
+                                        username:self.props.location.state.username
+                                        
+                                 
+                } }}>Click</Link> 
+                                    </button>
                                 </div>)
                             }) }
                         

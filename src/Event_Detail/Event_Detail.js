@@ -1,12 +1,53 @@
 import React, { Component } from 'react';
 import './Event_Detail.css';
-
+let self = this;
 class Event_Detail extends Component {
+
+  constructor()
+  {
+    super();
+    this.state = {
+      slots:[
+        {
+          endTime: "10:00am",
+          id: "1",
+          noOfInterviewsEnrolled: [
+              {
+                  noOfInterviewsTaken: "10",
+                  userid: "2"
+              }
+          ],
+          startTime: "6:00am"
+      }
+      ]
+    }
+  }
+
+    componentDidMount()
+    {
+      var self  = this;
+      var key = this.props.location.state.key;
+      console.log(key);
+      fetch("https://perl-react-project.firebaseio.com/event/"+key+".json").then(res => res.json())
+      .then(function(data)
+    {
+      console.log(data);
+       self.setState({
+         slots:data.slots
+       });
+
+    })
+
+    }
   render() {
+
+    let self = this;
     return (
       <div >
+        
         <nav id="ID_head_nav" class="navbar navbar-inverse">
           <div class="container-fluid">
+         
             <div class="navbar-header">
               <span id="ID_topic">Islot </span>
             </div>
@@ -32,34 +73,44 @@ class Event_Detail extends Component {
           <li><a data-toggle="pill" href="#ED_update"><span id="ED_U">Update</span></a></li>
 
         </ul>
-
+        
         <div class="tab-content">
-          <div id="ED_view" class="tab-pane fade in active">
-            <div class="container" id="ED_viewpage">
-              <h3 id="ED_timeslots">9AM - 10AM</h3>
-              <h3 id="ED_points">56</h3>
-              <div class="row" id="ED_inside">
-                <div class="col-lg-6" id="ED_insidecontent">
-                  <i class="fas fa-user-circle" id="ED_inside_i"></i>
-                  <span id="ED_inside_span">  dhinesh</span>
+        {self.state.slots.map(function(data)
+          {
+             return(
+               <div>
+              <div id="ED_view" class="tab-pane fade in active">
+              <div class="container" id="ED_viewpage">
+
+              
+                <h3 id="ED_timeslots">{data.startTime} - {data.endTime}</h3>
+              <span id="vada" class="btn">{data.noOfInterviewsEnrolled.length}</span>
+                
                 </div>
-                <div class="col-lg-6" id="ED_insidecontent">
+                <div class="row" id="ED_inside">
+                {data.noOfInterviewsEnrolled.map(function(d)
+                {
+                  return (
+                  <div class="col-lg-6" id="ED_insidecontent">
                   <i class="fas fa-user-circle" id="ED_inside_i"></i>
-                  <span id="ED_inside_span">  dhinesh</span>
+                  <span id="ED_inside_span"> {d.username}</span>
                 </div>
-                <div class="col-lg-6" id="ED_insidecontent">
-                  <i class="fas fa-user-circle" id="ED_inside_i"></i>
-                  <span id="ED_inside_span">  dhinesh</span>
+                  )
+                })}
+                
+              </div>
+
                 </div>
-                <div class="col-lg-6" id="ED_insidecontent">
-                  <i class="fas fa-user-circle" id="ED_inside_i"></i>
-                  <span id="ED_inside_span">  dhinesh</span>
                 </div>
+             )
+          })}
+          
+           
 
               </div>
-            </div>
+          
 
-          </div>
+          
           <div id="ED_update" class="tab-pane fade">
             <div class="container row" id="ED_updatepage">
               <div class="col-lg-4">
@@ -76,7 +127,7 @@ class Event_Detail extends Component {
             </div>
 
           </div>
-        </div>
+        
         );
       }
     }

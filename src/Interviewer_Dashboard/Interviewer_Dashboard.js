@@ -8,6 +8,7 @@ class Interviewer_Dashboard extends Component {
         super();
         this.state = {
             userid :"",
+            username:"",
             recentEventArray: [
                 {
                     startTime:"9:00am",
@@ -143,7 +144,7 @@ class Interviewer_Dashboard extends Component {
                 console.log(Object.keys(upevent).length);
                 //console.log(recevent.size);
                 var  keyData = Object.keys(data);
-                console
+        
                 
                 for (var x = 0; x < Object.keys(recevent).length; x++) {
                     const recEventObj = {
@@ -275,7 +276,8 @@ class Interviewer_Dashboard extends Component {
                                     <Link to={{ pathname: '/EventDetail', state: { 
                                         key:data.key,
                                         slotData:data.slots,
-                                        userid:self.state.userid
+                                        userid:self.state.userid,
+                                        username:self.props.location.state.username
                                  
                 } }}>Click</Link>  </button>
                                 </div>)
@@ -299,7 +301,9 @@ class Interviewer_Dashboard extends Component {
                                      <Link to={{ pathname: '/EventDetail', state: { 
                                         key:data.key,
                                         slotData:data.slots,
-                                        userid:self.state.userid
+                                        userid:self.state.userid,
+                                        username:self.props.location.state.username
+                                        
                                  
                 } }}>Click</Link> 
                                     </button>

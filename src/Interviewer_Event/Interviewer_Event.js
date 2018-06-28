@@ -41,12 +41,13 @@ class Interviewer_Event extends Component {
 
         var key = this.props.location.state.key;
          var uid = this.props.location.state.userid;
-         console.log(uid)
+         var username = this.props.location.state.username;
+         console.log("username" + username);
     
       var changedData
         console.log(key);
 
-        fetch("https://perl-react-project.firebaseio.com/event/-LG-qV3AWXOgl672h5Q2.json").then(res =>res.json())
+        fetch("https://perl-react-project.firebaseio.com/event/"+ key+ ".json").then(res =>res.json())
         .then(function(data)
     {
 
@@ -64,18 +65,28 @@ class Interviewer_Event extends Component {
            if(s[i].id==uid)
              index=i;
        }
-    
+    var d ;
 
     console.log(index);
-
-    if(index!=-1)
+    if(index==-1)
     {
+  data.slots[id].noOfInterviewsEnrolled.push({
+         id:uid,
+         username:username,
+         noOfInterviewsTaken:0
+    })
+}
+else{
+d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
+
+}
+
     
-                var d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
+    
        
     
     
-      fetch("https://perl-react-project.firebaseio.com/event/-LG-qV3AWXOgl672h5Q2.json", {
+      fetch("https://perl-react-project.firebaseio.com/event/"+key+".json", {
             method: 'PUT',
     
             body: JSON.stringify(data),
@@ -87,7 +98,7 @@ class Interviewer_Event extends Component {
            
             return res;
         }).catch(err => err);
-    }
+    
     })
        
 

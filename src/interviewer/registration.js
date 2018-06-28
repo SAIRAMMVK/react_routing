@@ -36,7 +36,7 @@ export default class InterviewerReg extends Component {
             fields[field]=event.target.value;
         }
         this.setState({
-            fields
+            fields:fields
         });
     }
     navigate(){
@@ -249,7 +249,8 @@ export default class InterviewerReg extends Component {
                 
                 <Link to={{ pathname: '/interview_dash', state: { 
                     skills:this.state.fields.locations,
-                    userid:this.state.id
+                    userid:this.state.id,
+                    username:this.state.fields["name"]
                 } }}>My route</Link>                
                 </button>
 
