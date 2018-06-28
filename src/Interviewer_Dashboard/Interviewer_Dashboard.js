@@ -7,6 +7,7 @@ class Interviewer_Dashboard extends Component {
     constructor() {
         super();
         this.state = {
+            userid :"",
             recentEventArray: [
                 {
                     startTime:"9:00am",
@@ -82,9 +83,14 @@ class Interviewer_Dashboard extends Component {
     }
     componentDidMount() {
 
-        //console.log(this.props);
+        console.log(this.props);
         var skills = this.props.location.state.skills;
-        console.log(skills)
+        var userid = this.props.location.state.userid;
+
+        this.setState({
+            userid:userid
+        })
+      //  console.log(skills)
         const self = this;
         var recevent = {};
         var upevent = {};
@@ -227,6 +233,7 @@ class Interviewer_Dashboard extends Component {
     
     
     render() {
+        let self = this;
 
         return (
             <div>
@@ -256,10 +263,10 @@ class Interviewer_Dashboard extends Component {
                     <div id="ID_box_container"class="col-lg-9 line">
                         <h3 id="ID_rec">Recent Events </h3>
                         <div class="row">
-                            {this.state.recentEventArray.map(function (data) {
+                            {self.state.recentEventArray.map(function (data) {
                               
                               return (  <div id="ID_card" class="col-lg-3">
-                                    <h3 id="ID_card_heading">{data.eventName}</h3>
+                                    <h3 id="ID_card_heading">{data.userid}</h3>
                                     <h4 id="ID_card_date">{data.eventDate}</h4>
                                     <h4 id="ID_card_start_time">Start Time: <span id="ID_st">{data.startTime}</span></h4>
                                     <h4 id="ID_card_stop_time">End Time: <span id="ID_et">{data.endTime}</span></h4>
@@ -267,9 +274,10 @@ class Interviewer_Dashboard extends Component {
                                     {/* <Link to={`/EventDetail:${data.id}`}>Click</Link></button> */}
                                     <Link to={{ pathname: '/EventDetail', state: { 
                                         key:data.key,
-                                        slotData:data.slots
+                                        slotData:data.slots,
+                                        userid:self.state.userid
                                  
-                } }}>My route</Link>  </button>
+                } }}>Click</Link>  </button>
                                 </div>)
                             }) }
 
@@ -285,7 +293,16 @@ class Interviewer_Dashboard extends Component {
                                     <h4 id="ID_card_date">{data.eventDate}</h4>
                                     <h4 id="ID_card_start_time">Start Time: <span id="ID_st">{data.startTime}</span></h4>
                                     <h4 id="ID_card_stop_time">End Time: <span id="ID_et">{data.endTime}</span></h4>
-                                    <button id="ID_view_data"  type="button" class="btn btn-lg btn-success"><Link to="/eventDetail">click</Link></button>
+                                    <button id="ID_view_data"  type="button" class="btn btn-lg btn-success">
+                                    {/* <Link to="/eventDetail">click</Link> */}
+
+                                     <Link to={{ pathname: '/EventDetail', state: { 
+                                        key:data.key,
+                                        slotData:data.slots,
+                                        userid:self.state.userid
+                                 
+                } }}>Click</Link> 
+                                    </button>
                                 </div>)
                             }) }
 

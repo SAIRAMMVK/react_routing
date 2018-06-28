@@ -6,7 +6,7 @@ class AdminReg extends Component {
 
         super(props);
         this.state = {
-
+            adminId:"",
             isValid: 'false',
             eventname: '',
             eventname_error: "false",
@@ -27,6 +27,8 @@ class AdminReg extends Component {
         this.submit = this.submit.bind(this);
     }
     componentDidMount() {
+
+        console.log("id" + this.props);
         var self = this;
         var skillName = [];
 

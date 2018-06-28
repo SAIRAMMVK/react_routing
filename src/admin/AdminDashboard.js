@@ -5,12 +5,14 @@ class AdminDashboard extends Component {
     constructor() {
         super();
         this.state = {
+            adminId:"",
             recentEventArray: [
                 {
                     endTime: "2.00pm",
                     eventDate: "06/20/2018",
                     eventName: "Angular walk-in",
                     id: "01",
+                    adminId:"",
                     isClosed: "false",
                     location: "hyderabad",
                     skill: "Angular",
@@ -37,6 +39,7 @@ class AdminDashboard extends Component {
                     eventDate: "06/20/2018",
                     eventName: "Angular walk-in",
                     id: "01",
+                    adminId:"",
                     isClosed: "false",
                     location: "hyderabad",
                     skill: "Angular",
@@ -51,6 +54,7 @@ class AdminDashboard extends Component {
                                     userid: "1"
                                 }
                             ],
+
                             startTime: "9.00am"
                         }
 
@@ -64,6 +68,12 @@ class AdminDashboard extends Component {
         // console.log(this.state.recevent);
     }
     componentDidMount() {
+
+        console.log(this.props);
+        var adminId = this.props.location.state.userid;
+        this.setState({
+               adminId:adminId
+        });
         const self = this;
         var recevent = {};
         var upevent = {};
@@ -90,6 +100,9 @@ class AdminDashboard extends Component {
 
 
                     // if ((Math.abs(cm - gm) == 0 && ((cd -gd) <= 0)||((cd-gd) > -5))){
+                        console.log("ids " + data.adminId + "  " + self.state.adminId)
+
+                    
                         //recent events 
                         if(Math.abs(cm-gm)==0 &&  (gd-cd<-7  || gd-cd <=0))
                         {
@@ -106,6 +119,7 @@ class AdminDashboard extends Component {
                         console.log("upcoming");
 
                     }
+                
 
                 }
                 console.log(Object.keys(recevent).length);
@@ -199,6 +213,7 @@ class AdminDashboard extends Component {
                             <span id="ID_topic">Islot </span>
                         </div>
                         <span id="ID_main_head">Admin Dashboard</span>
+                        <button class="btn btn-primary"><li><Link to="/adminReg" id="ID_settings_name" >create Event</Link></li></button>
 
                         <div class="dropdown" id="ID_settings_page">
                             <a  class="dropdown-toggle" type="button" data-toggle="dropdown"><i id="ID_settings" class="fas fa-cogs"></i>
@@ -207,7 +222,7 @@ class AdminDashboard extends Component {
                                 <li><a id="ID_settings_name" href="#">Profile settings</a></li>
                                 <li><a id="ID_settings_name" href="#">Location Management</a></li>
                                 <li><a id="ID_settings_name" href="#">Skill Management</a></li>
-                                <li><Link to="/adminReg" id="ID_settings_name" >create Event</Link></li>
+                               
                             </ul>
                         </div>
                         <button id="ID_logout"class="btn btn-danger" onClick={this.signOut}><Link to="/">Logout</Link></button>

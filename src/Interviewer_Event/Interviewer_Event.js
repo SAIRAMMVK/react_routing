@@ -28,59 +28,135 @@ class Interviewer_Event extends Component {
     }
 
     toogle(id) {
-        console.log(id)
-        var d  = this.state.slots[id].noOfInterviewsEnrolled[0].noOfInterviewsTaken;
-        console.log(d);
+
+        var self = this;
+        
+        // console.log(id)
+        // var d  = this.state.slots[id].noOfInterviewsEnrolled[0].noOfInterviewsTaken;
+        // console.log(d);
               
         //    this.setState({
         //        noOfInterviewsEnrolled:
         //    });
+
+        var key = this.props.location.state.key;
+         var uid = this.props.location.state.userid;
+         console.log(uid)
+    
+      var changedData
+        console.log(key);
+
+        fetch("https://perl-react-project.firebaseio.com/event/-LG-qV3AWXOgl672h5Q2.json").then(res =>res.json())
+        .then(function(data)
+    {
+
+          //console.log(data)
+
+        var index = -1;
+        var count = 0;
+
+        console.log(data.slots[id]);
+        
+       var s = data.slots[id].noOfInterviewsEnrolled;
+
+       for(var i=0;i<s.length;i++)
+       {
+           if(s[i].id==uid)
+             index=i;
+       }
+    
+
+    console.log(index);
+
+    if(index!=-1)
+    {
+    
+                var d = data.slots[id].noOfInterviewsEnrolled[index].noOfInterviewsTaken +=1;
+       
+    
+    
+      fetch("https://perl-react-project.firebaseio.com/event/-LG-qV3AWXOgl672h5Q2.json", {
+            method: 'PUT',
+    
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+          
+           
+            return res;
+        }).catch(err => err);
+    }
+    })
+       
+
+    
+
+       
+
+    // console.log(dt);
+
+
     }
     update() {
 
     }
     componentDidMount() {
-        var key = this.props.location.state.key;
+   
+    var self = this;
+ console.log(this.props);
 
 
         var data = this.props.location.state.slotData;
-        console.log(data)
-        console.log(data[0].endTime);
-      console.log(data[0].noOfInterviewsEnrolled[0].noOfInterviewsTaken)
-      console.log(this.state.slots[0].noOfInterviewsEnrolled[0].noOfInterviewsTaken)
-
-        this.setState({
-
-            slots: [
-                {
-                    endTime: data[0].endTime,
-                    startTime: data[0].startTime,
-                    id: data[0].id,
-                    noOfInterviewsEnrolled: [
-                        {
-                            noOfInterviewsTaken: "9",
-                            userid: "1"
-                        }
-                    ],
 
 
+            fetch("https://perl-react-project.firebaseio.com/event/-LG-qV3AWXOgl672h5Q2.json").then(res => res.json())
+            .then(function(data)
+        {
+                    self.setState({
+                        slots:data.slots
+                    });
+        })
 
-                },
-                {
-                    endTime: data[0].endTime,
-                    startTime: data[0].startTime,
-                    id: data[0].id,
-                    noOfInterviewsEnrolled: [
-                        {
-                            noOfInterviewsTaken: "10",
-                            userid: "1"
-                        }
-                    ],
+      
+    //     console.log(data)
+    //     console.log(data[0].endTime);
+    //   console.log(data[0].noOfInterviewsEnrolled[0].noOfInterviewsTaken)
+    //   console.log(this.state.slots[0].noOfInterviewsEnrolled[0].noOfInterviewsTaken)
+
+        // this.setState({
+
+        //     slots: [
+        //         {
+        //             endTime: data[0].endTime,
+        //             startTime: data[0].startTime,
+        //             id: data[0].id,
+        //             noOfInterviewsEnrolled: [
+        //                 {
+        //                     noOfInterviewsTaken: "9",
+        //                     userid: "1"
+        //                 }
+        //             ],
 
 
 
-                }]
-        });
+        //         },
+        //         {
+        //             endTime: data[0].endTime,
+        //             startTime: data[0].startTime,
+        //             id: data[0].id,
+        //             noOfInterviewsEnrolled: [
+        //                 {
+        //                     noOfInterviewsTaken: "10",
+        //                     userid: "1"
+        //                 }
+        //             ],
+
+
+
+        //         }]
+        // });
 
 
 
@@ -89,35 +165,34 @@ class Interviewer_Event extends Component {
 
     render() {
         let my = this;
-        let count =0;
+        let count =-1;
         return (
-            <div id="IE_body">
+          
 
-                <div class="container box1">
+             
 
-             {/* fhfg {this.state.slots[0].noOfInterviewsEnrolled[0].noOfInterviewsTaken} */}
                 
           
-                    <div class="row">
-                        {my.state.slots.map(function (data) {
+                   <div>
+                       
 
                           
 
-                            return (<div>
+                                {my.state.slots.map(function (data,i) {
+                                    
+                                
+                            return (
+                                <div>
+                                  <div id="IE_body">
+                                   <div class="container box1">
+                                  <div class="row">
                         <div class="col-lg-3"><p id="IE_time1"><i class="fas fa-clock">&nbsp; &nbsp; </i> <span id="IE_time2">{data.startTime} - {data.endTime}</span></p></div>
                                 
-                                <div class="col-lg-3"> <p id="IE_count">{
-                                    data.noOfInterviewsEnrolled.map(function(d)
-                                {
-                                    return ( 
-                                        <h1>{ d.noOfInterviewsTaken}</h1>
-                                    )
-                                })
-                                }</p></div>
+                                <div class="col-lg-3"> <p id="IE_count">{data.noOfInterviewsEnrolled.length }</p></div>
                                 <div class="col-lg-3">
                                     <div id="IE_tog">
                                         <label class="switch">
-                                            <input type="checkbox"  onClick={my.toogle.bind(this,count++)} />
+                                            <input type="checkbox"  onClick={my.toogle.bind(this,i)} />
                                             <span class="slider round" ></span>
                                         </label></div>
                                 </div>
@@ -126,16 +201,19 @@ class Interviewer_Event extends Component {
                                         <input type="text" class="form-control" id="IE_total" />
                                     </h4>
                                 </div>
+                                </div>
+                                </div>
+                            </div>
                             </div>
                             
                             );
 
                         })}
 
- </div>
 
 
-           </div>
+
+       
                     
 
                 

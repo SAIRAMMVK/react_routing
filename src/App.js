@@ -5,6 +5,7 @@ import Form from './DriveRegistration/DriveRegistration';
 import './DriveRegistration/DriveRegistration.css';
 import AdminDashboard from './admin/AdminDashboard';
 import Interviewer_Dashboard from './Interviewer_Dashboard/Interviewer_Dashboard';
+import AdminSignup from './AdminSignup/AdminSignup';
 import Event_Detail from './Event_Detail/Event_Detail';
 import Interviewer_Event from './Interviewer_Event/Interviewer_Event';
 // import fire from './Fire';
@@ -65,6 +66,7 @@ class App extends Component {
       <div>
             <Route exact path="/" component={HomePage} />
             <Route path="/signup_interview" component={InterviewerReg} />
+            <Route path="/signup_admin" component ={AdminSignup} />
             <Route path="/adminReg" component={AdminReg} />
             <Route path="/interview_dash" component={Interviewer_Dashboard} />
             <Route path="/EventDetail" name="id" component={Interviewer_Event} />
@@ -79,7 +81,7 @@ class App extends Component {
       </div>
         </Router>
 
-
+ 
     );
   }
 }

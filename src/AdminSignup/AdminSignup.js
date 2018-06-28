@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './registration.css';
+import './AdminSignup.css';
 import {Link} from 'react-router-dom';
 
 
-export default class InterviewerReg extends Component {
+export default class AdminSignup extends Component {
     
     
     constructor(){
@@ -54,17 +54,18 @@ export default class InterviewerReg extends Component {
             })
            // data insertion into firebase
 
-           fetch('https://perl-react-project.firebaseio.com/user.json').then(res =>res.json())
+           fetch('https://perl-react-project.firebaseio.com/Admin.json').then(res =>res.json())
            .then(function(data)
         {
-            var d = Object.keys(data).length;
+            var d = 0;
+            d = Object.keys(data).length;
             self.setState(
                 {
                     id:d
                 }
             )
 
-            fetch('https://perl-react-project.firebaseio.com/user.json', {
+            fetch('https://perl-react-project.firebaseio.com/Admin.json', {
 
                 method: 'POST',
                 headers: {
@@ -77,13 +78,7 @@ export default class InterviewerReg extends Component {
                         "Name":self.state.fields.name,
                         "Password":self.state.fields.password,
                         "Locations":self.state.fields.locations,
-                        "id": d,
-                        "eventPoints":[{
-                            eventName:"",
-                            eventId:"",
-                            eventDate:"",
-                            points:""
-                        }]
+                        "id": d
                 })
                 })
     
@@ -229,12 +224,12 @@ export default class InterviewerReg extends Component {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label for="location">Skills</label>
+                            <label for="location">Location</label>
                             <div className="input-group">
                             <select name="locations" onChange={this.handleChange} multiple >
-                                    <option value="angular">Angular</option>
-                                    <option value="react">React</option>
-                                    <option value="java">Java</option>
+                                    <option value="chennai">chennai</option>
+                                    <option value="hyderabad">hyderabad</option>
+                                    <option value="pune">pune</option>
                             </select>
                             </div>
                         </div>
@@ -247,7 +242,7 @@ export default class InterviewerReg extends Component {
                 <button onClick={this.navigate} id="AD_save" disabled={!this.state.check}>
                 {/* <Link to="/interview_dash">Register Me!</Link> */}
                 
-                <Link to={{ pathname: '/interview_dash', state: { 
+                <Link to={{ pathname: '/Admin_Dash', state: { 
                     skills:this.state.fields.locations,
                     userid:this.state.id
                 } }}>My route</Link>                
